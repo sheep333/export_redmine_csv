@@ -1,0 +1,16 @@
+{
+  "git_data": {
+    "git_branch_name": "",
+    "git_directory": ""
+  },
+  "issue_filter":{
+    "project_id": "",
+    "fix_versioned_id": "",
+    "status_id": "*"
+  },
+  "redmine_auth": {
+    "user_name": "",
+    "password": "",
+    "key": ""
+  }
+}
