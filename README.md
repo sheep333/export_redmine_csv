@@ -14,7 +14,8 @@ python main.py {コマンド名}
 - issue_filter
 
 #### 出力内容
-チケットID｜マージ履歴
+- "./output/get_issues.csv"
+  - チケットID｜マージ履歴
 
 ### get_issues
 #### 機能
@@ -24,11 +25,19 @@ python main.py {コマンド名}
 - issue_filter
 
 #### 出力内容
-- [RemineAPIで取得できる情報一覧](https://www.redmine.org/projects/redmine/wiki/Rest_Issues#Creating-an-issue)
+- "./output/merge_check_{ブランチ名}.csv"
+  - [RemineAPIで取得できる情報一覧](https://www.redmine.org/projects/redmine/wiki/Rest_Issues#Creating-an-issue)
 
-### check_user_handle_time
+### check_user_time
 #### 機能
 - RedmineのIssueを条件で絞り込み、ユーザ毎のチケット消化に必要な時間を出力する
 
 #### 指定するパラメータ
 - issue_filter
+
+#### 出力内容
+- "./output/check_user_time.csv"を出力
+  - ユーザ名|Issueの時間数|Issueタイトル|トラッカー
+
+- "./output/check_user_time_summary.csv"を出力
+  - ユーザ名|総時間数
