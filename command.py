@@ -37,19 +37,21 @@ class Command():
 
     def _merge_check(self):
         # RedmineのIssueフィルターをマージしてIssueを検索
-        issues = self.redmine.filter_issues(**self.data["merge_check_filter"])
+        issues = self.redmine.issue.filter(**self.data["merge_check_filter"])
 
         # Githubのマージされたブランチと比較
         result = []
         git_checker = GitChecker(**self.data["git_data"])
         for issue in issues:
-            result.append(git_checker.merge_check(issue.id))
+            tmp = git_checker.merge_check(issue.id)
+            tmp.insert(0, issue.tracker.name)
+            result.append(tmp)
         logger.info("Check of git succeeded!!")
 
         # CSV化する
         logger.info("Create CSV")
-        df = pd.DataFrame(result, columns=["issue_id", "output"])
-        df.to_csv(f"./output/merge_check_{self.data['git_data']['branch_name']}.csv")
+        df = pd.DataFrame(result, columns=["tracker", "issue_id", "output"])
+        df.to_csv("./output/merge_check.csv")
         logger.info("Success to create CSV file.")
         return True
 

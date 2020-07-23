@@ -6,9 +6,12 @@ logger = logging.getLogger(__name__)
 
 class GitChecker():
 
-    def __init__(self, branch_name, directory):
-        self.branch_name = branch_name
-        self.directory = directory
+    def __init__(self, **kwargs):
+        if "branch_name" not in kwargs or "directory" not in kwargs:
+            raise ValueError("gitの取得に必要な値が設定されていません。")
+
+        self.branch_name = kwargs["branch_name"]
+        self.directory = kwargs["directory"]
         self._checkout_branch()
 
     def _checkout_branch(self):
@@ -19,7 +22,7 @@ class GitChecker():
             raise ValueError(f"{self.branch_name}をチェックアウトできません")
 
         try:
-            subprocess.run(f"git pull", shell=True, cwd=self.directory)
+            subprocess.run("git pull", shell=True, cwd=self.directory)
         except Exception:
             logger.error(f"Can't pull branch: {self.branch_name}")
             raise ValueError(f"{self.branch_name}のプルに失敗しました。")
