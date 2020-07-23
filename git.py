@@ -16,13 +16,13 @@ class GitChecker():
             subprocess.run(["git", "checkout", f"{self.branch_name}"], cwd=self.directory)
         except Exception:
             logger.error(f"Can't checkout branch: {self.branch_name}")
-            raise ValueError(f'{self.branch_name}をチェックアウトできません')
+            raise ValueError(f"{self.branch_name}をチェックアウトできません")
 
         try:
             subprocess.run(f"git pull", shell=True, cwd=self.directory)
         except Exception:
             logger.error(f"Can't pull branch: {self.branch_name}")
-            raise ValueError(f'{self.branch_name}のプルに失敗しました。')
+            raise ValueError(f"{self.branch_name}のプルに失敗しました。")
 
     def merge_check(self, id):
         # FIXME: 毎回データを取得するよりもtmpファイルを作ってgrepかける方が負担が少ないかも。
@@ -37,4 +37,4 @@ class GitChecker():
         if output is not None:
             return [id, output]
         else:
-            return [id, '']
+            return [id, ""]
