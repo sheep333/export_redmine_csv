@@ -19,16 +19,15 @@ class Command():
         self.data = json.load(tmp)
         self.redmine = Redmine(self.data["redmine_url"], key=getenv("KEY"))
 
-    @classmethod
-    def execute_command(cls, command):
-        if not cls._check_command(cls, command):
+    def execute_command(self, command):
+        if not self._check_command(command):
             raise ValueError(f"{command}は存在しないコマンドです")
         elif command == "merge_check":
-            cls._merge_check()
+            self._merge_check()
         elif command == "get_issues":
-            cls._get_issues()
+            self._get_issues()
         elif command == "check_user_time":
-            cls._check_user_time()
+            self._check_user_time()
 
     def _check_command(self, command):
         if command in self.command_list:
@@ -58,7 +57,7 @@ class Command():
         issues = self.redmine.issue.filter(**self.data["get_issues_filter"])
 
         # IssueをCSVとして全て出力
-        issues.export("csv", savepath="./output/get_issues.csv", columns="all")
+        issues.export("pdf", savepath="./output", filename="get_issues.pdf", columns="all")
         return True
 
     def _check_user_time(self):
