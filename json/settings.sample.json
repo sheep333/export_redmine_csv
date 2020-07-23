@@ -1,0 +1,22 @@
+{
+  "git_data": {
+    "git_branch_name": "release/1.0.0",
+    "git_directory": "/User/sheep333/src/git_repos"
+  },
+  "merge_check_filter":{
+    "project_id": "project",
+    "fix_versioned_id": "1000|1001",
+    "status_id": "*"
+  },
+  "get_issues_filter":{
+    "project_id": "project",
+    "fix_versioned_id": "1000|1001",
+    "status_id": "*"
+  },
+  "check_time_filter":{
+    "project_id": "project",
+    "fix_versioned_id": "1000|1001",
+    "status_id": "*"
+  },
+  "redmine_url": "https://redmine.sheep333.jp"
+}
