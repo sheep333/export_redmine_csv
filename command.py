@@ -7,6 +7,7 @@ from redminelib import Redmine
 from redminelib.exceptions import ResourceAttrError
 
 from git import GitChecker
+from redmine import RedmineModule
 
 logger = logging.getLogger(__name__)
 
@@ -43,21 +44,23 @@ class Command():
         git_checker = GitChecker(**self.data["git_data"])
         for issue in issues:
             result.append(git_checker.merge_check(issue.id))
-        logger.info(f"Check of git succeeded!!")
+        logger.info("Check of git succeeded!!")
 
         # CSV化する
         logger.info("Create CSV")
         df = pd.DataFrame(result, columns=["issue_id", "output"])
         df.to_csv(f"./output/merge_check_{self.data['git_data']['branch_name']}.csv")
-        logger.info(f"Success to create CSV file.")
+        logger.info("Success to create CSV file.")
         return True
 
     def _get_issues(self):
         # RedmineのIssueフィルターをjsonから取得してIssueを検索
         issues = self.redmine.issue.filter(**self.data["get_issues_filter"])
 
-        # IssueをCSVとして全て出力
-        issues.export("pdf", savepath="./output", filename="get_issues.pdf", columns="all")
+        # 必要なデータのみを抽出し、CSVとして全て出力
+        data_list = RedmineModule.issues_to_list(issues)
+        df = pd.DataFrame(data_list, columns=RedmineModule.attributes)
+        df.to_csv("./output/get_issues.csv")
         return True
 
     def _check_user_time(self):
@@ -79,7 +82,7 @@ class Command():
             data_list.append([user, hours, issue.tracker["name"], issue.subject])
 
         df = pd.DataFrame(data_list, columns=["user", "estimated_hours", "tracker", "issue"])
-        df.to_csv(f"./output/check_user_time.csv")
+        df.to_csv("./output/check_user_time.csv")
 
         df_sum = df.groupby("user").agg({"estimated_hour": np.sum})
-        df_sum.to_csv(f"./output/check_user_time_summary.csv")
+        df_sum.to_csv("./output/check_user_time_summary.csv")
