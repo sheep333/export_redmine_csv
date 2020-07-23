@@ -4,7 +4,6 @@ import numpy as np
 from os import getenv
 import pandas as pd
 from redminelib import Redmine
-from redminelib.exceptions import ResourceAttrError
 
 from git import GitChecker
 from redmine import RedmineModule
@@ -68,23 +67,10 @@ class Command():
     def _check_user_time(self):
         # RedmineのIssueフィルターをjsonから取得してIssueを検索
         issues = self.redmine.issue.filter(**self.data["check_time_filter"])
-
-        data_list = []
-        for issue in issues:
-            try:
-                user = issue.assigned_to
-            except ResourceAttrError:
-                user = "担当者なし"
-
-            try:
-                hours = issue.estimated_hours
-            except ResourceAttrError:
-                hours = 0
-
-            data_list.append([user, hours, issue.tracker["name"], issue.subject])
+        data_list = RedmineModule.create_user_time_list(issues)
 
         df = pd.DataFrame(data_list, columns=["user", "estimated_hours", "tracker", "issue"])
         df.to_csv("./output/check_user_time.csv")
 
-        df_sum = df.groupby("user").agg({"estimated_hour": np.sum})
+        df_sum = df.groupby("user").agg({"estimated_hours": np.sum})
         df_sum.to_csv("./output/check_user_time_summary.csv")

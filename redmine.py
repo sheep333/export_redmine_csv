@@ -1,3 +1,4 @@
+from redminelib.exceptions import ResourceAttrError
 from redminelib.resources import BaseResource
 
 
@@ -34,4 +35,21 @@ class RedmineModule():
                     data = attr_data
                 issue_data.append(data)
             data_list.append(issue_data)
+        return data_list
+
+    @classmethod
+    def create_user_time_list(cls, issues):
+        data_list = []
+        for issue in issues:
+            try:
+                user = issue.assigned_to.name
+            except ResourceAttrError:
+                user = "担当者なし"
+
+            try:
+                hours = issue.estimated_hours
+            except ResourceAttrError:
+                hours = 0
+
+            data_list.append([user, hours, issue.tracker.name, issue.subject])
         return data_list
