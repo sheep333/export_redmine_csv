@@ -1,7 +1,16 @@
-# WIP
+## できること
 
 ## 使い方
-python main.py {コマンド名}
+1. `json/settings.py`にパラメータを設定する。指定するパラメータはそれぞれのコマンド欄参照。
+
+2. .envファイルにRedmineのAPIKEYを指定する
+
+3. pythonの仮想環境をインストールして実行
+
+```
+pipenv install
+pipenv run python main.py {コマンド名}
+```
 
 ## 使用できるコマンド
 
@@ -10,8 +19,9 @@ python main.py {コマンド名}
 - RedmineのIssueを取得して、gitの特定のブランチにマージされているかを確認するCSVを出力する
 
 #### 指定するパラメータ
+- redmine_url
 - git_data
-- issue_filter
+- merge_check_filter
 
 #### 出力内容
 - "./output/get_issues.csv"
@@ -22,7 +32,8 @@ python main.py {コマンド名}
 - RedmineのIssueを条件で絞り込んで取得
 
 #### 指定するパラメータ
-- issue_filter
+- redmine_url
+- get_issues_filter
 
 #### 出力内容
 - "./output/merge_check_{ブランチ名}.csv"
@@ -33,7 +44,8 @@ python main.py {コマンド名}
 - RedmineのIssueを条件で絞り込み、ユーザ毎のチケット消化に必要な時間を出力する
 
 #### 指定するパラメータ
-- issue_filter
+- redmine_url
+- check_time_filter
 
 #### 出力内容
 - "./output/check_user_time.csv"を出力
