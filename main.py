@@ -1,5 +1,5 @@
-from logging import getLogger, DEBUG
 import sys
+from logging import DEBUG, getLogger
 
 from command import Command
 

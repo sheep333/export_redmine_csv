@@ -1,7 +1,8 @@
 import json
 import logging
-import numpy as np
 from os import getenv
+
+import numpy as np
 import pandas as pd
 from redminelib import Redmine
 

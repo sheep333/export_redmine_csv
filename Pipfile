@@ -9,6 +9,7 @@ flake8 = "*"
 [packages]
 pandas = "*"
 python-redmine = "*"
+isort = "*"
 
 [requires]
 python_version = "3.7"
