@@ -1,0 +1,15 @@
+# 環境毎の個人設定
+.env
+settings.json
+
+# VSCodeの設定
+.vscode/settings.json
+
+# 不要なキャッシュ
+__pycache__
+
+# 出力されるCSV
+output/*
+
+# git関連設定
+!.gitkeep
