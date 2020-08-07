@@ -45,12 +45,13 @@ class Command():
         for issue in issues:
             tmp = git_checker.merge_check(issue.id)
             tmp.insert(0, issue.tracker.name)
+            tmp.insert(3, issue.subject)
             result.append(tmp)
         logger.info("Check of git succeeded!!")
 
         # CSV化する
         logger.info("Create CSV")
-        df = pd.DataFrame(result, columns=["tracker", "issue_id", "output"])
+        df = pd.DataFrame(result, columns=["tracker", "issue_id", "output", "subject"])
         df.to_csv("./output/merge_check.csv")
         logger.info("Success to create CSV file.")
         return True
