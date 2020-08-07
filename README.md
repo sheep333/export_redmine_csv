@@ -37,7 +37,7 @@ pipenv run python main.py {コマンド名}
 - get_issues_filter
 
 #### 出力内容
-- "./output/merge_check_{ブランチ名}.csv"
+- "./output/merge_check.csv"
   - [RemineAPIで取得できる情報一覧](https://www.redmine.org/projects/redmine/wiki/Rest_Issues#Creating-an-issue)
 
 ### check_user_time
